@@ -22,12 +22,12 @@ public class MenuService {
                 Type.chinese.add(menu);
                 break;
             default:
-                System.out.println("유효하지 않는 타입입니다.");
+                System.out.println("Invalid Type!");
         }
     }
 
     public static void printTypeMenu() {
-        System.out.println("확인하고 싶은 타입을 선택해주세요. 0. 한식 1. 양식 2. 일식 3. 중식");
+        System.out.println("Select Type! 0. Korean 1. English 2. Japanese 3. Chinese");
         Scanner sc = new Scanner(System.in);
         int type = sc.nextInt();
         sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
@@ -45,7 +45,7 @@ public class MenuService {
                 print(Type.chinese);
                 break;
             default:
-                System.out.println("유효하지 않는 타입입니다.");
+                System.out.println("Invalid Type!");
         }
     }
 

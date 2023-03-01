@@ -7,9 +7,7 @@ public class Store {
     private String name;
     private String phoneNum;
 
-    private List<String> reviews = new ArrayList<>();
-
-    public Store(String name, String phoneNum) {
+    public Store(String name, String phoneNum) { // 스토어 생성자
         this.name = name;
         this.phoneNum = phoneNum;
     }
@@ -30,11 +28,4 @@ public class Store {
         this.phoneNum = phoneNum;
     }
 
-    public List<String> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(List<String> reviews) {
-        this.reviews = reviews;
-    }
 }

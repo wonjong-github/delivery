@@ -10,66 +10,56 @@ import java.util.Scanner;
 
 public class StoreService {
 
-    private List<Store> stores = new ArrayList<>();
+    private List<Store> stores = new ArrayList<>(); // 스토어 타입의 배열, 내부엔 스토어 타입의 객체들이 들어감
+    /*
+    List<type> objname = new ArrayList<>();
+    편리한 리스트...........파이썬 같은..?
+    원래 자바는 배열 길이 수정 불가
+    */
 
     Scanner sc = new Scanner(System.in);
 
     public Store register(){
-        System.out.print("상점의 이름을 입력해 주세요 : ");
+        System.out.print("Input store name : ");
         String name = sc.nextLine();
-        System.out.print("상점의 번호를 입력해 주세요 : ");
+        System.out.print("Input store number : ");
         String phoneNum = sc.nextLine();
-        Store newStore = new Store(name, phoneNum);
-        stores.add(newStore);
-        System.out.println(name + "상점이 등록되었습니다.");
+        Store newStore = new Store(name, phoneNum); // 스토어 인스턴스 생성(생성자)
+        stores.add(newStore); // 생성 후 배열에 넣기 l.append()와 비슷?
+        System.out.println("'''" + name + "''' Registration Success!");
         return newStore;
     }
 
     public void registerMenu() {
-        System.out.print("메뉴를 등록할 상점의 이름을 입력해 주세요 : ");
+        System.out.print("Input store name : ");
         String storeName = sc.nextLine();
         Store findStore = findStore(storeName);
         if (findStore == null) {
-            System.out.println("등록되지 않은 상점입니다.");
+            System.out.println("No store");
             return;
         }
 
-        System.out.print("등록할 메뉴의 타입을 입력해주세요 0. 한식 1. 양식 2. 일식 3. 중식 : ");
+        System.out.println("Input type of menu 0. Korean 1. English 2. Japanese 3. Chinese");
         int type = sc.nextInt();
         sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
-        System.out.print("등록할 메뉴의 이름을 입력해주세요 : ");
+        System.out.print("Input menu name : ");
         String menuName = sc.nextLine();
-        System.out.print("등록할 메뉴의 가격을 입력해주세요 : ");
+        System.out.print("Input menu price : ");
         int price = sc.nextInt();
         sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
-        System.out.print("등록할 메뉴의 수량을 입력해주세요 : ");
+        System.out.print("Input the number of menu : ");
         int amount = sc.nextInt();
         sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
         Menu newMenu = new Menu(menuName, price, amount);
 
         MenuService.registerType(type, newMenu);    // 메뉴 등록
-        System.out.println(menuName + "메뉴가 등록되었습니다!");
-    }
-
-    public void registerReview(String adminName, String review){
-        System.out.print("메뉴를 등록할 상점의 이름을 입력해 주세요 : ");
-        String storeName = sc.nextLine();
-        Store store = findStore(adminName);
-        if (store == null) {
-            System.out.println("등록되지 않은 상점입니다.");
-            return;
-        }
-        store.getReviews().add(review);
-        System.out.println(store.getName() + "상점의 리뷰가 등록되었습니다.");
+        System.out.println("'''" + menuName + "''' Registration Success!");
     }
 
     public void printStore(){
         for (int i = 0; i < stores.size(); i++) {
             System.out.println(stores.get(i).getName() + " " + stores.get(i).getPhoneNum());
         }
-//        for (Store store : stores) {
-//            System.out.println(store.getName());
-//        }
     }
 
     public Store findStore(String adminName){
