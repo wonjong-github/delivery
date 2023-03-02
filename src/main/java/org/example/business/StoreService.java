@@ -1,5 +1,6 @@
 package org.example.business;
 
+import org.example.config.DeliveryConfig;
 import org.example.entity.Store;
 import org.example.entity.Menu;
 import org.example.entity.Type;
@@ -11,6 +12,21 @@ import java.util.Scanner;
 public class StoreService {
 
     private List<Store> stores = new ArrayList<>(); // 스토어 타입의 배열, 내부엔 스토어 타입의 객체들이 들어감
+
+    private MenuService menuService;
+
+    public StoreService(MenuService menuService) {
+        this.menuService = menuService;
+    }
+
+    // 초기 예시인 값을 미리 넣어주는 함수 (필요없는 영역)
+    public void init() {
+        Store pizzaHut = new Store("A", "1234-1234");
+        Store korean = new Store("B", "1029-1934");
+        stores.add(pizzaHut);
+        stores.add(korean);
+    }
+
     /*
     List<type> objname = new ArrayList<>();
     편리한 리스트...........파이썬 같은..?
@@ -30,6 +46,11 @@ public class StoreService {
         return newStore;
     }
 
+    /**
+     * 1. 상점을 찾는다.
+     * 2. 새로운 메뉴를 등록한다. (다른 상점이어도 메뉴는 달라야함. 설계상 어쩔수없음. 만일 메뉴 이름 중복을 허용하고 싶다면 Menu클래스에 key가 될만한 변수가 필요)
+     * 3. 메뉴를 상점에 등록한다.
+     */
     public void registerMenu() {
         System.out.print("Input store name : ");
         String storeName = sc.nextLine();
@@ -38,22 +59,9 @@ public class StoreService {
             System.out.println("No store");
             return;
         }
-
-        System.out.println("Input type of menu 0. Korean 1. English 2. Japanese 3. Chinese");
-        int type = sc.nextInt();
-        sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
-        System.out.print("Input menu name : ");
-        String menuName = sc.nextLine();
-        System.out.print("Input menu price : ");
-        int price = sc.nextInt();
-        sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
-        System.out.print("Input the number of menu : ");
-        int amount = sc.nextInt();
-        sc.nextLine();  // console input에 남아있는 \n값 날려주기(문자열 이외 입력받을때 발생)
-        Menu newMenu = new Menu(menuName, price, amount);
-
-        MenuService.registerType(type, newMenu);    // 메뉴 등록
-        System.out.println("'''" + menuName + "''' Registration Success!");
+        Menu menu = menuService.registerMenu();
+        findStore.getMenuList().add(menu);
+        System.out.println("Store " + findStore.getName() + " register " + menu.getName());
     }
 
     public void printStore(){
